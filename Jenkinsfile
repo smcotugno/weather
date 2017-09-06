@@ -8,16 +8,15 @@ node {
 
   checkout scm
 
-  stage 'Build front and backend image '
+  stage 'Build ui and api containers '
     sh("cd ./containers/weather-ui; docker build -t ${uiImageTag} .")
     sh("cd ./containers/weather-api; docker build -t ${apiImageTag} .")
-    sh("cd ./containers/weather-proxy; docker build -t ${proxyImageTag} .")
 
   stage 'Run Test'
     sh("echo Test placeholder")
 
-  stage 'Push to Registry'
-    sh("cd ./containers/weather-app; gcloud docker -- push ${appImageTag}")
+  stage 'Push Containers to Registry'
+    sh("cd ./containers/weather-ui; gcloud docker -- push ${uiImageTag}")
     sh("cd ./containers/weather-api; gcloud docker -- push ${apiImageTag}")
 
   stage 'Deploy '
