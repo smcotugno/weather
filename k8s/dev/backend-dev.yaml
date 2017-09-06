@@ -24,7 +24,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthz
-            port: 8080
+            port: 81
         ports:
         - name: backend
           containerPort: 9005

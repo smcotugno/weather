@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: weather-frontend-production
+  name: weather-ui-production
 spec:
   replicas:
   template:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/cloud-solutions-images/weather-app:1.0.0
+        image: gcr.io/cloud-solutions-images/weather-ui:1.0.0
         resources:
           limits:
             memory: "500Mi"
