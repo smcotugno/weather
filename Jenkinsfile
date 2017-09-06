@@ -22,33 +22,8 @@ node {
     sh("cd ./containers/weather-api; gcloud docker -- push ${appImageTag}")
 }
 
-  stage "Deploy Application"
-  stage 'Run Go tests'
-  switch (env.BRANCH_NAME) {
-    // Roll out to canary environment
-    case "canary":
-        // Change deployed image in canary to the one we just built
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-app:1.0.0#${appImageTag}#' ./k8s/canary/frontend-canary.yaml")
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-api:1.0.0#${apiImageTag}#' ./k8s/canary/backend-canary.yaml")
-        sh("kubectl --namespace=production apply -f k8s/canary/frontend-canary.yaml")
-        sh("kubectl --namespace=production apply -f k8s/canary/backend-canary.yaml")
-        sh("kubectl --namespace=production apply -f k8s/services/frontend.yaml")
-        sh("kubectl --namespace=production apply -f k8s/services/backend.yaml")
-        // sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
-        break
-    // Roll out to production
-    case "master":
-        // Change deployed image in canary to the one we just built
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-app:1.0.0#${appImageTag}#' ./k8s/production/frontend-production.yaml")
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-api:1.0.0#${apiImageTag}#' ./k8s/production/backend-production.yaml")
-        sh("kubectl --namespace=production apply -f k8s/services/frontend.yaml")
-        sh("kubectl --namespace=production apply -f k8s/services/backend.yaml")
-        sh("kubectl --namespace=production apply -f k8s/production/frontend-production.yaml")
-        sh("kubectl --namespace=production apply -f k8s/production/backend-production.yaml")
-        // sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
-        break
+
     // Roll out a dev environment
-    default:
         // Create namespace if it doesn't exist
         sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
         // Don't use public load balancing for development branches
