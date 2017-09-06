@@ -5,23 +5,20 @@ node {
   def appImageTag = "gcr.io/${project}/${appName}-app:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
   def apiImageTag = "gcr.io/${project}/${appName}-api:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
-
   checkout scm
 
-  stage 'Build front and backend image '{
+  stage 'Build front and backend image '
     sh("cd ./containers/weather-app; docker build -t ${appImageTag} .")
     sh("cd ./containers/weather-api; docker build -t ${apiImageTag} .")
-}
 
-  stage 'Run Test'{
+  stage 'Run Test'
     sh("echo Test placeholder")
-  }
 
-  stage 'Push to Registry'{
+  stage 'Push to Registry'
     sh("cd ./containers/weather-app; gcloud docker -- push ${appImageTag}")
     sh("cd ./containers/weather-api; gcloud docker -- push ${appImageTag}")
-}
 
+  stage 'Deploy '
 
     // Roll out a dev environment
         // Create namespace if it doesn't exist
@@ -36,6 +33,4 @@ node {
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/backend-dev.yaml")
         echo 'To access your environment run `kubectl proxy`'
         echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/${feSvcName}:80/"
-  }
 }
-
