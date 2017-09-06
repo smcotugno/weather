@@ -16,7 +16,7 @@ node {
 
   stage 'Push to Registry'
     sh("cd ./containers/weather-app; gcloud docker -- push ${appImageTag}")
-    sh("cd ./containers/weather-api; gcloud docker -- push ${appImageTag}")
+    sh("cd ./containers/weather-api; gcloud docker -- push ${apiImageTag}")
 
   stage 'Deploy '
 
