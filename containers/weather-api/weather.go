@@ -134,7 +134,7 @@ func handleWeather(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/weather", handleWeather)
+	mux.HandleFunc("/api", handleWeather)
 
 	server := http.Server{
 		Addr: ":9393",
