@@ -5,12 +5,8 @@ node {
   def appImageTag = "gcr.io/${project}/${appName}-app:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
   def apiImageTag = "gcr.io/${project}/${appName}-api:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
-  try {
-      stage('Checkout'){
 
-        checkout scm
-      }
-  }
+  checkout scm
 
   stage 'Build front and backend image '{
     sh("cd ./containers/weather-app; docker build -t ${appImageTag} .")
@@ -66,22 +62,5 @@ node {
         echo 'To access your environment run `kubectl proxy`'
         echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/${feSvcName}:80/"
   }
-
-  catch (err) {
-
-        currentBuild.result = "FAILURE"
-        echo "The Build failed.."
-            // mail body: "project build error is here: ${env.BUILD_URL}" ,
-            // from: 'xxxx@yyyy.com',
-            // replyTo: 'yyyy@yyyy.com',
-            // subject: 'project build failed',
-            // to: 'zzzz@yyyyy.com'
-
-        throw err
-    }
-
 }
-
-
-
 
