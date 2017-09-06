@@ -1,0 +1,8 @@
+version: V1
+containers:
+- name: weather-api
+  image: devopscotugno/weather-api
+  ports:
+  - name: http
+    hostPort: 80
+    containerPort: 9393
