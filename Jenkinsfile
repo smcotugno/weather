@@ -35,7 +35,7 @@ node {
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-api-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-proxy-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-ui-dev.yaml")
-        sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-api--dev.yaml")
+        sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-api-dev.yaml")
         echo 'To access your environment run `kubectl proxy`'
         echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/${feSvcName}:80/"
 }
