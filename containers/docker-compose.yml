@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+        weather_proxy:
+                build: ./weather-proxy
+                ports:
+                        - "6060:80"
+                networks:
+                        - weather_app
+        weather_ui:
+                build: ./weather-ui
+                networks:
+                        - weather_app
+        weather_api:
+                build: ./weather-api
+                networks:
+                        - weather_app
+
+networks:
+        weather_app:
