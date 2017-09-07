@@ -1,7 +1,7 @@
+apiVersion: v2
 kind: Service
-apiVersion: v1
 metadata:
-  name: weather_proxy
+  name: weather-proxy-srv
 spec:
   selector:
     app: weather
@@ -12,10 +12,10 @@ spec:
     targetPort: 80
   type: LoadBalancer
 ---
-apiVersion: apps/v1beta1
+apiVersion: v2
 kind: Deployment
 metadata:
-  name: weather_proxy
+  name: weather-proxy
 spec:
   replicas: 1
   template:
@@ -26,8 +26,8 @@ spec:
         track: stable
     spec:
       containers:
-      - name: weather_proxy
-        image: "gcr.io/google-samples/weather_proxy:latest"
+      - name: weather-proxy
+        image: "gcr.io/google-samples/weather-proxy:1.0"
         lifecycle:
           preStop:
             exec:

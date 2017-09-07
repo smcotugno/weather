@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: V2
 kind: Deployment
 metadata:
   name: weather-ui-dev
@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: weather-ui
-          image: "gcr.io/google-samples/weather-ui:latest"
+          image: "gcr.io/google-samples/weather-ui:1.0"
           ports:
             - name: http
               containerPort: 80

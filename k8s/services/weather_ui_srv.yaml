@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: weather_ui
+  name: weather-ui-srv
 spec:
   selector:
     app: weather
