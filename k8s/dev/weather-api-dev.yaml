@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: weather-api-dev
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: weather
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: weather-api
+          image: "gcr.io/google-samples/weather-api:latest"
+          ports:
+            - name: http
+              containerPort: 9393

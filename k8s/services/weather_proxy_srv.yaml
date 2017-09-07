@@ -1,0 +1,34 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: weather_proxy
+spec:
+  selector:
+    app: weather
+    tier: frontend
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: weather_proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weather
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+      - name: weather_proxy
+        image: "gcr.io/google-samples/weather_proxy:latest"
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/usr/sbin/nginx","-s","quit"]
