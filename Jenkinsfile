@@ -34,6 +34,7 @@ node {
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-ui-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-api-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-proxy-srv.yaml")
+        sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-proxy-dev.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-ui-dev.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/weather-api-dev.yaml")
         echo 'To access your environment run `kubectl proxy`'
