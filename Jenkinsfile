@@ -27,7 +27,7 @@ node {
         // Create namespace if it doesn't exist
         sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
         // Don't use public load balancing for development branches
-        sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/weather-proxy-srv.yaml")
+        // ** For now in Dev use Loadbalancer sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/weather-proxy-srv.yaml")
         sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-ui:1.0#${uiImageTag}#' ./k8s/dev/weather-ui-dev.yaml")
         sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-api:1.0#${apiImageTag}#' ./k8s/dev/weather-api-dev.yaml")
         sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-proxy:1.0#${proxyImageTag}#' ./k8s/services/weather-proxy-srv.yaml")
