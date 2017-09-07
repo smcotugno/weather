@@ -8,20 +8,20 @@ node {
 
   checkout scm
 
-  stage 'Build ui and api containers '
+  stage 'Building docker containers '
     sh("cd ./containers/weather-ui; docker build -t ${uiImageTag} .")
     sh("cd ./containers/weather-api; docker build -t ${apiImageTag} .")
     sh("cd ./containers/weather-proxy; docker build -t ${proxyImageTag} .")
 
-  stage 'Run Test'
+  stage 'Run Test placeholder'
     sh("echo Test placeholder")
 
-  stage 'Push Containers to Registry'
+  stage 'Push Containers to GCP Registry'
     sh("cd ./containers/weather-ui; gcloud docker -- push ${uiImageTag}")
     sh("cd ./containers/weather-api; gcloud docker -- push ${apiImageTag}")
     sh("cd ./containers/weather-proxy; gcloud docker -- push ${proxyImageTag}")
 
-  stage 'Deploy '
+  stage 'Deploy via Kube apply'
 
     // Roll out a dev environment
         // Create namespace if it doesn't exist
