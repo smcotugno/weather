@@ -23,7 +23,6 @@ spec:
       labels:
         app: weather
         tier: frontend
-        track: stable
     spec:
       containers:
       - name: weather-proxy
