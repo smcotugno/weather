@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: weather-api
-          image: "gcr.io/google-samples/weather-api:1.0"
+          image: "gcr.io/cloud-solutions-images/weather-api:1.0.0"
           ports:
             - name: http
               containerPort: 9393

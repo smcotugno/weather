@@ -28,9 +28,9 @@ node {
         sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
         // Don't use public load balancing for development branches
         // ** For now in Dev use Loadbalancer sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/weather-proxy-srv.yaml")
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-ui:1.0#${uiImageTag}#' ./k8s/dev/weather-ui-dev.yaml")
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-api:1.0#${apiImageTag}#' ./k8s/dev/weather-api-dev.yaml")
-        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-proxy:1.0#${proxyImageTag}#' ./k8s/services/weather-proxy-srv.yaml")
+        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-ui:1.0.0#${uiImageTag}#' ./k8s/dev/weather-ui-dev.yaml")
+        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-api:1.0.0#${apiImageTag}#' ./k8s/dev/weather-api-dev.yaml")
+        sh("sed -i.bak 's#gcr.io/cloud-solutions-images/weather-proxy:1.0.0#${proxyImageTag}#' ./k8s/dev/weather-proxy-dev.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-ui-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-api-srv.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/weather-proxy-srv.yaml")
