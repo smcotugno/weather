@@ -9,6 +9,8 @@ node {
   checkout scm
 
   stage 'Building docker containers '
+    sh("sed -i.bak 's#Microservice Docker Container#Docker Container Version ${env.BRANCH_NAME}.${env.BUILD_NUMBER} deployoed with Kubernettes#' ./containers/weather-ui/index.html")
+
     sh("cd ./containers/weather-ui; docker build -t ${uiImageTag} .")
     sh("cd ./containers/weather-api; docker build -t ${apiImageTag} .")
     sh("cd ./containers/weather-proxy; docker build -t ${proxyImageTag} .")
